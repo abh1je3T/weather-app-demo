@@ -1,18 +1,24 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { ReactComponent as SunRise } from "../../assets/icons/fill/all/sunrise.svg";
+import { useMainContext } from "../../Context/mainContext";
+import { getDate } from "../HelperUtils";
+
 
 function CenterWeatherInfo() {
+  const {
+    // selectedCityWeatherData,
+    selectedCityData
+  } = useMainContext();
+
   const currDateTime=new Date();
-  console.log(currDateTime)
   return (
     <div className="w-3/4">
       <div className="flex flex-row justify-start items-center gap-2 h-20">
         <SunRise className="h-20 w-26" />
         <div className="flex h-full justify-center pt-5 flex-col">
-          <h2>Mumbai, Maharashtra</h2>
+          <h2>{`${selectedCityData?.name||"Bhayander"}, ${selectedCityData?.admin1||"Maharashtra"}, ${selectedCityData?.country ||"India"}`}</h2>
           <p>
-            <span>16 March,2023 / </span>
-            <span>Saturday</span>
+          {getDate()}
           </p>
         </div>
       </div>
