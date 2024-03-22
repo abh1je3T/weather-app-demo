@@ -34,8 +34,8 @@ function TopNavigation() {
 
   const fetchWeatherData=useCallback(
     async () => {
-      const { id, latitude, longitude } = selectedCityData;
-      if (id) {
+      const { latitude, longitude } = selectedCityData;
+      if (latitude&&longitude) {
         const weatherDataResponse = await getSelectedcityWeatherData(
           latitude,
           longitude
@@ -47,9 +47,9 @@ function TopNavigation() {
   )
 
   useEffect(() => {
-    selectedCityData?.id&&fetchWeatherData();
+    selectedCityData?.longitude&&fetchWeatherData();
     // eslint-disable-next-line
-  }, [selectedCityData?.id]);
+  }, [selectedCityData?.longitude]);
 
   return (
     <nav className="sticky top-0 z-10 bg-white border-b border-gray-200 bg-opacity-10">
@@ -63,8 +63,16 @@ function TopNavigation() {
               className="hello-world"
               selectOnFocus
               handleHomeEndKeys
-              getOptionLabel={(option) =>
-                `${option.name}, ${option.admin1}, ${option.country}`
+              getOptionLabel={(option) =>{
+                const {name, admin1,country}=option;
+                let selectedOption='';
+                if(name)selectedOption+=name+",";
+                if(admin1)selectedOption+=admin1+",";
+                if(country)selectedOption+=country;
+                
+
+                return selectedOption;
+              }
               }
               PopperComponent={CustomPopper}
               renderOption={getrenderOption}
@@ -75,7 +83,7 @@ function TopNavigation() {
                 ...city,
               }))}
               onChange={(_, value) => {
-                setSelectedCityData(value);
+                value&&setSelectedCityData(value);
               }}
               renderInput={(params) => (
                 <TextField

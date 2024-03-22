@@ -49,8 +49,6 @@ const getUserLocationByNavigator = async () => {
       async (position) => {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
-        console.log("Latitude:", latitude);
-        console.log("Longitude:", longitude);
         try {
           const locationInfo = await getLocationInfo(latitude, longitude);
           resolve(locationInfo);
@@ -102,20 +100,5 @@ const fetchUserLocationData = async () => {
   }
 };
 
-
-const getUserLocationData = async () => {
-  try {
-    const locationInfo = await fetchUserLocationData();
-    console.log("Location information:", locationInfo);
-  } catch (error) {
-    console.error('Failed to fetch user location:', error);
-  }
-};
-
-
-
-
-
-
-export{getSearchedCities,getSelectedcityWeatherData,getUserLocationData}
+export{getSearchedCities,getSelectedcityWeatherData,fetchUserLocationData}
 

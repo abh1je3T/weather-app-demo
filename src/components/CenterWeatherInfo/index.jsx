@@ -1,22 +1,40 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { ReactComponent as SunRise } from "../../assets/icons/fill/all/sunrise.svg";
 import { useMainContext } from "../../Context/mainContext";
 import { getDate } from "../HelperUtils";
 
 
 function CenterWeatherInfo() {
+
+  const [formattedData, setFormattedData] = useState("");
+
   const {
-    // selectedCityWeatherData,
+    selectedCityWeatherData,
     selectedCityData
   } = useMainContext();
 
+
+  useEffect(() => {
+    console.log(selectedCityWeatherData,"Logs-------------->>>>>>>>>>",selectedCityData)
+    getFormattedValue();
+  }, [selectedCityData])
+  
+function  getFormattedValue(){
+  const {name, admin1,country}=selectedCityData;
+   let selectedOption='';
+   if(name)selectedOption+=name+",";
+   if(admin1)selectedOption+=admin1+",";
+   if(country)selectedOption+=country;
+   
+   setFormattedData(selectedOption);
+}
   const currDateTime=new Date();
   return (
     <div className="w-3/4">
       <div className="flex flex-row justify-start items-center gap-2 h-20">
         <SunRise className="h-20 w-26" />
-        <div className="flex h-full justify-center pt-5 flex-col">
-          <h2>{`${selectedCityData?.name||"Bhayander"}, ${selectedCityData?.admin1||"Maharashtra"}, ${selectedCityData?.country ||"India"}`}</h2>
+        <div className="flex h-full justify-center pt-5 flex-col text-left">
+          {!selectedCityData.name?<h2>Loading...</h2>:<h2>{formattedData}</h2>}
           <p>
           {getDate()}
           </p>
