@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import MainCard from '../MainCard'
 import TopNavigation from '../TopNavigation'
 import CenterWeatherInfo from '../CenterWeatherInfo'
+import { getUserLocationData } from '../../api/apiCall'
 
 function Home() {
+  const [getLocationData, setLocationData] = useState({})
+
+useEffect(() => {
+  getUserLocationData()
+}, [])
+
+
   return (
     <div className='home-container home-container-day-background'>
       <TopNavigation/>
